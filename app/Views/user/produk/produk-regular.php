@@ -1,4 +1,4 @@
-<?= $this->extend('layout/app'); ?>
+<?= $this->extend('user/layout/app'); ?>
 <?= $this->section('content'); ?>
 
 <style>
@@ -68,12 +68,10 @@
     .produk-img {
         width: 100%;
         aspect-ratio: 4 / 3;
-        object-fit: contain;
+        object-fit: cover;
         background-color: #f9f9f9;
         border-bottom: 3px solid #ffcc00;
-        padding: 10px;
     }
-
 
     /* Konten Produk */
     .produk-body {
@@ -259,7 +257,7 @@
 <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="<?= base_url('img/beranda.jpeg'); ?>" alt="Slider 1">
+            <img src="<?= base_url('img/' . $setting['slider_image']) ?>" alt="Slider 1">
             <div class="carousel-caption">
                 <h2>Produk Ima Catering</h2>
                 <p>Pilih Produk Kesukaanmu</p>
@@ -301,23 +299,91 @@
                 </div>
             <?php endforeach; ?>
         </div>
-
-        <!-- Tampilkan hanya jika sudah login -->
-        <?php if (session()->has('user_id')) : ?>
-            <div class="produk-footer">
-                <div class="harga-container">
-                    <span class="label-harga">Total Harga:</span>
-                    <span class="harga-text">Rp 150.000</span>
-                </div>
-                <a href="<?= base_url('pemesanan'); ?>" class="text-decoration-none">
-                    <button class="pesan-sekarang-btn">
-                        <span>Pesan Sekarang</span>
-                        <i class="fas fa-arrow-right"></i>
-                    </button>
-                </a>
+        <div class="produk-footer">
+            <div class="harga-container">
+                <span class="label-harga">Total Harga:</span>
+                <span class="harga-text">Rp 0</span>
             </div>
-        <?php endif; ?>
+
+            <!-- Tombol dinamis -->
+            <a href="#" id="pesanSekarangBtn" class="text-decoration-none">
+                <button class="pesan-sekarang-btn">
+                    <span>Pesan Sekarang</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </a>
+        </div>
     </div>
 </section>
+
+<script>
+    function addToCart(id, nama, harga, btn) {
+        const qtyInput = btn.parentElement.querySelector('.produk-qty');
+        const jumlah = parseInt(qtyInput.value) || 1;
+        fetch("<?= base_url('cart/add') ?>", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: new URLSearchParams({
+                id,
+                nama,
+                harga,
+                jumlah
+            })
+        }).then(res => res.json()).then(res => {
+            if (res.status === 'added' || res.status === 'updated') updateCartUI();
+        });
+    }
+
+    function updateCartUI() {
+        fetch("<?= base_url('cart/get') ?>")
+            .then(res => res.json())
+            .then(data => {
+                const container = document.querySelector('.produk-footer');
+                const hargaText = document.querySelector('.harga-text');
+                const pesanLink = document.getElementById('pesanSekarangBtn');
+
+                let total = 0;
+                let html = '';
+
+                data.forEach(item => {
+                    const subTotal = item.harga * item.jumlah;
+                    total += subTotal;
+                    html += `
+                <div class="d-flex justify-content-between align-items-center mt-3 mb-3 added-item" data-id="${item.id}">
+                    <span>${item.nama} (${item.jumlah}x) - Rp ${subTotal.toLocaleString()}</span>
+                    <button onclick="removeFromCart(${item.id})" class="btn btn-sm btn-danger">Hapus</button>
+                </div>`;
+                });
+
+                // Update UI produk yang sudah ditambahkan
+                document.querySelectorAll('.produk-footer .added-item').forEach(el => el.remove());
+                const hargaContainer = document.querySelector('.produk-footer .harga-container');
+                hargaContainer.insertAdjacentHTML('afterend', html);
+                hargaText.innerText = 'Rp ' + total.toLocaleString();
+
+                // Update tombol "Pesan Sekarang"
+                if (data.length > 0) {
+                    pesanLink.setAttribute('href', '<?= base_url('pemesanan'); ?>');
+                    pesanLink.onclick = null;
+                } else {
+                    pesanLink.setAttribute('href', '#');
+                    pesanLink.onclick = function(e) {
+                        e.preventDefault();
+                        alert('Anda belum memilih macam produk. Silakan tambahkan terlebih dahulu.');
+                    };
+                }
+            });
+    }
+
+    function removeFromCart(id) {
+        fetch(`<?= base_url('cart/remove/') ?>${id}`)
+            .then(res => res.json())
+            .then(res => updateCartUI());
+    }
+
+    document.addEventListener('DOMContentLoaded', updateCartUI);
+</script>
 
 <?= $this->endSection(); ?>

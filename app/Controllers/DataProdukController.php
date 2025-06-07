@@ -10,23 +10,14 @@ use App\Models\MacamProdukModel;
 
 class DataProdukController extends BaseController
 {
-    public function index()
-    {
-        //
-    }
-
-        // admin - data-produk
         public function data_produk()
         {
             $produkModel = new ProdukModel();
-    
-            // Ambil filter dari input
             $search = $this->request->getGet('search');
             $kategori = $this->request->getGet('kategori');
             $date_from = $this->request->getGet('date_from');
             $date_to = $this->request->getGet('date_to');
-    
-            // Query produk
+
             $query = $produkModel;
             if ($search) {
                 $query = $query->like('nama', $search);
@@ -50,18 +41,15 @@ class DataProdukController extends BaseController
             ]);
         }
     
-        // Form Tambah Produk
         public function create_produk()
         {
             return view('admin/data-produk/tambah-produk');
         }
     
-        // Simpan Data Produk Baru
         public function store_produk()
         {
             $produkModel = new ProdukModel();
     
-            // Validasi input
             $validated = $this->validate([
                 'gambar' => 'uploaded[gambar]|max_size[gambar,2048]|is_image[gambar]|mime_in[gambar,image/png,image/jpg,image/jpeg]',
                 'nama' => 'required',
@@ -73,12 +61,10 @@ class DataProdukController extends BaseController
                 return redirect()->back()->with('error', 'Validasi gagal, periksa kembali input Anda.');
             }
     
-            // Upload gambar
             $gambar = $this->request->getFile('gambar');
             $gambarName = $gambar->getRandomName();
             $gambar->move('uploads/produk', $gambarName);
     
-            // Simpan data produk
             $data = [
                 'gambar' => $gambarName,
                 'nama' => $this->request->getPost('nama'),
@@ -90,7 +76,6 @@ class DataProdukController extends BaseController
             return redirect()->to('/data-produk')->with('success', 'Produk berhasil ditambahkan.');
         }
     
-        // Form Edit Produk
         public function edit_produk($id)
         {
             $produkModel = new ProdukModel();
@@ -103,7 +88,6 @@ class DataProdukController extends BaseController
             return view('admin/data-produk/edit-produk', ['produk' => $produk]);
         }
     
-        // Simpan Perubahan Produk
         public function update_produk($id)
         {
             $produkModel = new ProdukModel();
@@ -119,14 +103,12 @@ class DataProdukController extends BaseController
                 'kategori' => $this->request->getPost('kategori'),
             ];
     
-            // Cek apakah ada gambar baru diupload
             if ($this->request->getFile('gambar')->isValid()) {
                 $gambar = $this->request->getFile('gambar');
                 $gambarName = $gambar->getRandomName();
                 $gambar->move('uploads/produk', $gambarName);
                 $data['gambar'] = $gambarName;
     
-                // Hapus gambar lama
                 if (file_exists('uploads/produk/' . $produk['gambar'])) {
                     unlink('uploads/produk/' . $produk['gambar']);
                 }
@@ -136,7 +118,6 @@ class DataProdukController extends BaseController
             return redirect()->to('/data-produk')->with('success', 'Produk berhasil diperbarui.');
         }
     
-        // Hapus Produk
         public function delete_produk($id)
         {
             $produkModel = new ProdukModel();
@@ -146,7 +127,6 @@ class DataProdukController extends BaseController
                 return redirect()->to('/data-produk')->with('error', 'Produk tidak ditemukan.');
             }
     
-            // Hapus gambar dari folder
             if (file_exists('uploads/produk/' . $produk['gambar'])) {
                 unlink('uploads/produk/' . $produk['gambar']);
             }
@@ -154,5 +134,4 @@ class DataProdukController extends BaseController
             $produkModel->delete($id);
             return redirect()->to('/data-produk')->with('success', 'Produk berhasil dihapus.');
         }
-        // end
 }

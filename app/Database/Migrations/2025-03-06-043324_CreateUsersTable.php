@@ -13,12 +13,14 @@ class CreateUsersTable extends Migration
             'name'     => ['type' => 'VARCHAR', 'constraint' => 255],
             'username' => ['type' => 'VARCHAR', 'constraint' => 255, 'unique' => true],
             'phone'    => ['type' => 'VARCHAR', 'constraint' => 20],
+            'role'     => ['type' => 'ENUM', 'constraint' => ['admin', 'user'], 'default' => 'user'],
             'password' => ['type' => 'VARCHAR', 'constraint' => 255],
             'created_at' => ['type' => 'DATETIME', 'null' => true],
             'updated_at' => ['type' => 'DATETIME', 'null' => true],
         ]);
 
         $this->forge->addKey('id', true);
+        $this->forge->addKey('phone');
         $this->forge->createTable('users');
     }
 

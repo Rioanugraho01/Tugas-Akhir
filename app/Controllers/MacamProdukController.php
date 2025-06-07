@@ -10,25 +10,17 @@ use App\Models\MacamProdukModel;
 
 class MacamProdukController extends BaseController
 {
-    public function index()
-    {
-        //
-    }
-
-
     // admin - macam produk
     public function macam_produk($produk_id = null)
     {
         $macamProdukModel = new MacamProdukModel();
         $produkModel = new ProdukModel();
 
-        // Ambil input filter
         $search = $this->request->getGet('search');
         $produkFilter = $this->request->getGet('produk_id'); // dari dropdown
         $date_from = $this->request->getGet('date_from');
         $date_to = $this->request->getGet('date_to');
 
-        // Query dasar
         $query = $macamProdukModel;
 
         if ($search) {
@@ -62,7 +54,7 @@ class MacamProdukController extends BaseController
     }
 
 
-    // Form Tambah Macam Produk
+    // Tambah Macam Produk
     public function create_macam_produk($produk_id = null)
     {
         $produkModel = new ProdukModel();
@@ -73,12 +65,11 @@ class MacamProdukController extends BaseController
         ]);
     }
 
-    // Method untuk menambahkan macam produk
+    // menambahkan macam produk
     public function store_macam_produk()
     {
         $macamProdukModel = new MacamProdukModel();
 
-        // Validasi input
         $validated = $this->validate([
             'nama'      => 'required',
             'deskripsi' => 'required',
@@ -180,7 +171,6 @@ class MacamProdukController extends BaseController
             return redirect()->to('/macam')->with('error', 'Macam Produk tidak ditemukan.');
         }
 
-        // Hapus gambar terkait jika ada
         if ($macamProduk['gambar'] && file_exists('uploads/macam-produk/' . $macamProduk['gambar'])) {
             unlink('uploads/macam-produk/' . $macamProduk['gambar']);
         }

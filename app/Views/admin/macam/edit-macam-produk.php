@@ -93,7 +93,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-            <a href="<?= base_url('/macam-produk') ?>" class="btn btn-secondary">Batal</a>
+            <a href="<?= base_url('/macam') ?>" class="btn btn-secondary">Batal</a>
         </form>
     </div>
 

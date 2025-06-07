@@ -12,7 +12,7 @@ class ProdukModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields = ['gambar', 'nama', 'deskripsi', 'kategori', 'created_at', 'updated_at'];
+    protected $allowedFields = ['gambar', 'nama', 'deskripsi', 'kategori', 'harga', 'created_at', 'updated_at'];
 
     public function getProdukByKategori($kategori)
     {

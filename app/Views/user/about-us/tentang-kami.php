@@ -1,4 +1,4 @@
-<?= $this->extend('layout/app'); ?>
+<?= $this->extend('user/layout/app'); ?>
 <?= $this->section('content'); ?>
 
 <style>
@@ -130,7 +130,7 @@
         .about-image {
             width: 100%;
         }
-        
+
         .features {
             flex-direction: column;
             align-items: center;
@@ -223,7 +223,7 @@
 <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="<?= base_url('img/beranda.jpeg'); ?>" alt="Slider 1">
+            <img src="<?= base_url('img/' . $setting['slider_image']) ?>" alt="Slider 1">
             <div class="carousel-caption">
                 <h2>Tentang Kami</h2>
                 <p>Apa Kamu Sudah Tau?</p>
@@ -237,11 +237,13 @@
     <div class="about-content">
         <h2>Siapa Kami?</h2>
         <p>
-        Ima Catering merupakan suatu usaha rumahan makanan, minuman dan kue rumahan yang sudah dijalankan oleh Ibu Ima sejak tahun 2015 hingga sekarang yang bertempat di Kecamatan Giri Kabupaten Banyuwangi. Ima Catering telah menawarkan beragam macam produk seperti Nasi Tumpeng, Nasi Kotak, Es Campur, Kue Kering dan Kue Basah.
+            <?= esc($setting['tentang_kami_text']) ?>
         </p>
     </div>
     <div class="about-image">
-        <img src="<?= base_url('img/slider-1.png'); ?>" alt="Tim Kami">
+        <img
+            src="<?= base_url('img/' . $setting['tentang_kami_image']) ?>"
+            alt="Tim Kami">
     </div>
 </div>
 
@@ -249,19 +251,19 @@
 <div class="features">
     <div class="feature-item">
         <i class="fas fa-utensils"></i>
-        <h3>Makanan Berkualitas</h3>
+        <h3> <?= esc($setting['icon1_text']) ?></h3>
     </div>
     <div class="feature-item">
         <i class="fas fa-tags"></i>
-        <h3>Harga Terjangkau</h3>
+        <h3> <?= esc($setting['icon2_text']) ?></h3>
     </div>
     <div class="feature-item">
         <i class="fas fa-users"></i>
-        <h3>Pelayanan Profesional</h3>
+        <h3> <?= esc($setting['icon3_text']) ?></h3>
     </div>
     <div class="feature-item">
         <i class="fas fa-star"></i>
-        <h3>Pengalaman Terpercaya</h3>
+        <h3> <?= esc($setting['icon4_text']) ?></h3>
     </div>
 </div>
 

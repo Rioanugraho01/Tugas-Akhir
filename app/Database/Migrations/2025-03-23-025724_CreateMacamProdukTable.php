@@ -15,6 +15,10 @@ class CreateMacamProdukTable extends Migration
                 'unsigned'       => true,
                 'auto_increment' => true,
             ],
+            'produk_id'  => [
+                'type' => 'INT',
+                'unsigned' => true
+            ],
             'gambar' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '255',
@@ -44,6 +48,7 @@ class CreateMacamProdukTable extends Migration
         ]);
         $this->forge->addKey('id', true);
         $this->forge->createTable('macam_produk');
+        $this->forge->addForeignKey('produk_id', 'produk', 'id', 'CASCADE', 'CASCADE');
     }
 
     public function down()

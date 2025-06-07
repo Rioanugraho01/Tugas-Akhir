@@ -1,4 +1,4 @@
-<?= $this->extend('layout/app'); ?>
+<?= $this->extend('user/layout/app'); ?>
 <?= $this->section('content'); ?>
 
 <style>
@@ -51,7 +51,15 @@
 <div class="container mt-5 mb-5">
     <h2 class="text-center mb-4 fw-bold">Form Pemesanan</h2>
     <div class="card form-card p-4">
-        <form action="proses_pemesanan.php" method="POST">
+        <form action="<?= base_url('form-pemesanan/simpan') ?>" method="POST">
+            <?= csrf_field(); ?>
+
+            <?php if (session()->getFlashdata('success')): ?>
+                <div class="alert alert-success">
+                    <?= session()->getFlashdata('success') ?>
+                </div>
+            <?php endif; ?>
+
             <div class="mb-3">
                 <label for="nama" class="form-label">Nama</label>
                 <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan nama Anda" required>
@@ -66,29 +74,27 @@
             </div>
             <div class="mb-3">
                 <label for="produk" class="form-label">Produk</label>
-                <input type="text" class="form-control" id="produk" name="produk" placeholder="Masukkan produk yang ingin dipesan" required>
+                <input type="text" class="form-control" id="produk" name="produk" placeholder="Masukkan jumlah produk (maksimal: 100)" required>
             </div>
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="tanggal_pemesanan" class="form-label">Tanggal Pemesanan</label>
-                    <input type="date" class="form-control" id="tanggal_pemesanan" name="tanggal_pemesanan" required>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="tanggal_pengambilan" class="form-label">Tanggal Pengambilan</label>
-                    <input type="date" class="form-control" id="tanggal_pengambilan" name="tanggal_pengambilan" required>
-                </div>
+            <div class="mb-3">
+                <label for="tanggal_pemesanan" class="form-label">Tanggal Pemesanan</label>
+                <input type="date" class="form-control" id="tanggal_pemesanan" name="tanggal_pemesanan" required>
+            </div>
+            <div class="mb-3">
+                <label for="waktu_pemesanan" class="form-label">Waktu Pemesanan</label>
+                <input type="time" class="form-control" id="waktu_pemesanan" name="waktu_pemesanan" required>
             </div>
             <div class="mb-3">
                 <label for="jumlah_tamu" class="form-label">Jumlah Tamu</label>
-                <input type="number" class="form-control" id="jumlah_tamu" name="jumlah_tamu" placeholder="Masukkan jumlah tamu (contoh: 50)" required>
+                <input type="number" class="form-control" id="jumlah_tamu" name="jumlah_tamu" placeholder="Masukkan jumlah tamu (maksimal: 100)" required>
             </div>
             <div class="mb-3">
-                <label for="pembayaran" class="form-label">Pembayaran</label>
+                <label for="pembayaran" class="form-label">DP Pembayaran</label>
                 <select class="form-control" id="pembayaran" name="pembayaran" required>
-                    <option value="" disabled selected>Pilih metode pembayaran</option>
-                    <option value="bayar_nanti">Bayar Nanti</option>
-                    <option value="dp">DP</option>
-                    <option value="bayar_langsung">Bayar Langsung</option>
+                    <option value="" disabled selected>Pilih besar DP</option>
+                    <option value="10">10%</option>
+                    <option value="20">20%</option>
+                    <option value="30">30%</option>
                 </select>
             </div>
             <div class="mb-3">

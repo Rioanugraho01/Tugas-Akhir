@@ -1,4 +1,4 @@
-<?= $this->extend('layout/app') ?>
+<?= $this->extend('user/layout/app'); ?>
 <?= $this->section('content') ?>
 
 <style>
@@ -22,7 +22,7 @@
 <div class="container py-5">
     <div class="card shadow rounded">
         <div class="card-body">
-            <h3 class="mb-4 text-center">Edit Profil</h3>
+            <h3 class="mb-4 text-center">Edit Profile</h3>
 
             <?php if (session()->getFlashdata('success')) : ?>
                 <div class="alert alert-success"><?= session()->getFlashdata('success'); ?></div>

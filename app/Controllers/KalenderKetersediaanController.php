@@ -21,7 +21,7 @@ class KalenderKetersediaanController extends BaseController
         $status = $this->request->getGet('status');
     
         $model = new KetersediaanModel();
-        $builder = $model->orderBy('tanggal', 'ASC');
+        $builder = $model->orderBy('id', 'ASC');
     
         if ($search) {
             $builder->like('tanggal', $search);

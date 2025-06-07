@@ -10,11 +10,6 @@ use App\Models\MacamProdukModel;
 
 class ProdukRegularController extends BaseController
 {
-    public function index()
-    {
-        //
-    }
-
     public function produk_regular()
     {
         $produkModel = new ProdukModel();

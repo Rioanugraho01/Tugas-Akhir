@@ -7,11 +7,6 @@ use CodeIgniter\HTTP\ResponseInterface;
 
 class TentangKamiController extends BaseController
 {
-    public function index()
-    {
-        //
-    }
-
     public function tentang()
     {
         return view('/user/about-us/tentang-kami');

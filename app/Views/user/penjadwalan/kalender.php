@@ -1,4 +1,4 @@
-<?= $this->extend('layout/app'); ?>
+<?= $this->extend('user/layout/app'); ?>
 <?= $this->section('content'); ?>
 
 <style>
@@ -79,7 +79,7 @@
         border-radius: 5px;
         text-align: center;
         position: absolute;
-        width: 70%;
+        width: 50%;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
@@ -98,7 +98,20 @@
         background-color: #dc3545;
     }
 
-    /* --- RESPONSIVE --- */
+    .today-highlight {
+        background-color: #0d6efd;
+        color: white;
+        font-weight: bold;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin: auto;
+    }
+
+    /* Responsive Kalender */
     @media (max-width: 768px) {
         .carousel-item {
             height: 400px;
@@ -128,9 +141,9 @@
 
         .table-bordered th,
         .table-bordered td {
-            height: 80px;
-            width: 80px;
-            font-size: 0.85rem;
+            height: 20px;
+            width: 20px;
+            font-size: 0.40rem;
         }
     }
 </style>
@@ -138,7 +151,7 @@
 <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="<?= base_url('img/beranda.jpeg'); ?>" alt="Slider 1">
+            <img src="<?= base_url('img/' . $setting['slider_image']) ?>" alt="Slider 1">
             <div class="carousel-caption">
                 <h2>Kalender Ketersediaan</h2>
                 <p>Pilihlah Jadwal Sesuai Dengan Keinginanmu</p>
@@ -174,7 +187,7 @@
                 </div>
             </div>
         </div>
-        <table class="table table-bordered text-center mt-4 bg-white text-dark">
+        <table class="table table-responsive table-bordered text-center mt-4 bg-white text-dark">
             <thead class="table-light">
                 <tr>
                     <th>Minggu</th>
@@ -217,7 +230,21 @@
                             echo "<td></td>";
                             $selesai = true;
                         } else {
-                            echo "<td>$tanggal";
+                            $currentDate = "$tahun-$bulan-" . str_pad($tanggal, 2, '0', STR_PAD_LEFT);
+                            $today = date('Y-m-d');
+                            $todayDateParts = explode('-', $today);
+                            $isToday = (
+                                intval($todayDateParts[0]) === intval($tahun) &&
+                                intval($todayDateParts[1]) === intval($bulan) &&
+                                intval($todayDateParts[2]) === intval($tanggal)
+                            );
+                            $todayClass = $isToday ? 'today-highlight' : '';
+                            echo "<td>";
+                            if ($isToday) {
+                                echo "<div class='today-highlight'>$tanggal</div>";
+                            } else {
+                                echo $tanggal;
+                            }
                             if (isset($tanggalStatus[$tanggal])) {
                                 $status = $tanggalStatus[$tanggal];
                                 echo '<div class="' . getStatusClass($status) . '">' . getStatusLabel($status) . '</div>';

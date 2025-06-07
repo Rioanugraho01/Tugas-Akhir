@@ -12,7 +12,7 @@ class UserModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['name', 'username', 'phone', 'password', 'created_at', 'updated_at'];
+    protected $allowedFields = ['name', 'username', 'phone', 'password', 'role', 'created_at', 'updated_at'];
 
     // Enkripsi password sebelum menyimpan
     protected function setPasswordHash(string $password)

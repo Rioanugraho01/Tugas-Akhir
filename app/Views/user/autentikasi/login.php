@@ -1,4 +1,4 @@
-<?= $this->extend('layout/app'); ?>
+<?= $this->extend('user/layout/app'); ?>
 <?= $this->section('content'); ?>
 
 <style>
@@ -154,11 +154,8 @@
                     <input type="password" name="password" class="form-control" placeholder="Password" required>
                     <i class="fas fa-lock"></i>
                 </div>
-                <button type="submit" class="btn btn-login">Masuk</button>
+                <button type="submit" class="btn btn-login mt-2">Masuk</button>
                 <p class="mt-3">
-                    <a href="#" class="forgot-password">Lupa password?</a>
-                </p>
-                <p>
                     Belum punya akun? <a href="<?= base_url('register'); ?>" class="register-link">Daftar</a>
                 </p>
             </form>

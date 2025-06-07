@@ -27,7 +27,6 @@ class Filters extends BaseFilters
     public array $aliases = [
         'csrf'          => CSRF::class,
         'toolbar'       => DebugToolbar::class,
-        'auth' => \App\Filters\AuthFilter::class,
         'honeypot'      => Honeypot::class,
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
@@ -35,7 +34,9 @@ class Filters extends BaseFilters
         'forcehttps'    => ForceHTTPS::class,
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
-        'admin' => \App\Filters\AdminFilter::class,
+        'role'          => \App\Filters\Role::class,
+
+
     ];
 
     /**
@@ -105,5 +106,7 @@ class Filters extends BaseFilters
      *
      * @var array<string, array<string, list<string>>>
      */
-    public array $filters = ['auth' => ['before' => ['produk/*']],];
+    
+    public array $filters = [];
 }
+

@@ -11,11 +11,12 @@ class UserSeeder extends Seeder
         $data = [
             'name'     => 'Admin Ima Catering',
             'username' => 'admin',
-            'phone'    => '12341234',
+            'phone'    => '082337406335',
             'password' => password_hash('admin123', PASSWORD_DEFAULT),
+            'role'     => 'admin',
         ];
 
-        // Insert data ke tabel users
         $this->db->table('users')->insert($data);
     }
 }
+

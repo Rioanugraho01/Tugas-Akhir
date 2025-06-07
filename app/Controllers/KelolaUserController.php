@@ -10,12 +10,6 @@ use App\Models\MacamProdukModel;
 
 class KelolaUserController extends BaseController
 {
-    public function index()
-    {
-        //
-    }
-
-        // admin - kelola-user
         public function kelola_user()
         {
             $userModel = new UserModel();
@@ -72,6 +66,11 @@ class KelolaUserController extends BaseController
                 'username' => $this->request->getPost('username'),
                 'phone' => $this->request->getPost('phone'),
             ];
+            $password = $this->request->getPost('password');
+            if (!empty($password)) {
+                $data['password'] = password_hash($password, PASSWORD_DEFAULT);
+            }
+            
             $userModel->update($id, $data);
             return redirect()->to('/kelola-user')->with('success', 'User berhasil diperbarui.');
         }

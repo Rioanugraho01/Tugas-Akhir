@@ -1,59 +1,25 @@
-<!DOCTYPE html>
-<html lang="id">
+<?= $this->extend('admin/layout/app'); ?>
+<?= $this->section('content'); ?>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Produk</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
-    <style>
-        body {
-            background: #f4f4f4;
-        }
-
-        .sidebar {
-            background: #343a40;
-            min-height: 100vh;
-            padding-top: 20px;
-            color: white;
-        }
-
-        .sidebar a {
-            color: white;
-            text-decoration: none;
-            display: block;
-            padding: 10px;
-            transition: 0.3s;
-        }
-
-        .sidebar a:hover {
-            background: #ffcc00;
-            color: black;
-            border-radius: 5px;
-        }
-    </style>
-</head>
+<style>
+    table td, table th {
+        padding: 1rem !important;
+        vertical-align: middle !important;
+        font-size: 1rem;
+        white-space: nowrap;
+    }
+</style>
 
 <body>
     <div class="container-fluid">
         <div class="row">
-            <!-- Sidebar -->
-            <nav class="col-md-3 col-lg-2 d-md-block sidebar">
-                <h4 class="text-center mb-4">Admin Ima Catering</h4>
-                <a href="admin"><i class="bi bi-speedometer2"></i> Dashboard</a>
-                <a href="kelola-user"><i class="bi bi-people"></i> Data Kelola User</a>
-                <a href="kalender-ketersediaan"><i class="bi bi-calendar-check"></i> Kalender Ketersediaan</a>
-                <a href="data-pemesanan"><i class="bi bi-cart"></i> Pemesanan</a>
-                <a href="data-produk"><i class="bi bi-box"></i> Produk</a>
-                <a href="macam"><i class="bi bi-box"></i> Macam Produk</a>
-                <a href="riwayat-pemesanan"><i class="bi bi-clock-history"></i> Riwayat Pemesanan</a>
-                <a href="laporan-transaksi"><i class="bi bi-receipt"></i> Laporan Transaksi</a>
-            </nav>
-
             <!-- Main Content -->
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content mt-3">
-                <h2 class="mb-3">Data Produk</h2>
+            <main class="col-md-9 col-lg-12 px-md-4 main-content">
+                <div class="bg-white border rounded-3 shadow-sm p-4 mb-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2 class="fw-bold text-dark mb-0">Data Produk</h2>
+                    </div>
+                </div>
 
                 <!-- Alert Notifikasi -->
                 <?php if (session()->getFlashdata('success')) : ?>
@@ -109,8 +75,8 @@
                     <i class="bi bi-box-seam"></i> Tambah Produk
                 </a>
 
-                <table class="table table-bordered mt-3">
-                    <thead class="table-dark">
+                <table class="table table-bordered table-hover shadow-sm mt-3">
+                    <thead class="table-dark text-center">
                         <tr>
                             <th>No</th>
                             <th>Gambar</th>
@@ -147,7 +113,4 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-
-</html>
+    <?= $this->endSection(); ?>
